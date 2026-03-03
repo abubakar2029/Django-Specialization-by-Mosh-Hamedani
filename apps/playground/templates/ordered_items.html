@@ -1,0 +1,55 @@
+<html>
+    <head>
+            <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+    </head>
+    <body>
+    <h1>Sorted Ordered Items</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order Item ID</th>
+                <th>Product Title</th>
+                <th>Unit Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{product.product__id}}</td>
+                <td>{{product.product__title}}</td>
+                <td>{{product.product__unit_price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+    
+    </body>
+</html>

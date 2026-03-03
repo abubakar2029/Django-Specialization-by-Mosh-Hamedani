@@ -1,0 +1,31 @@
+<html>
+    <body>
+    <h1>Collection 3 Order Items</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order Item ID</th>
+                <th>Product Title</th>
+                <th>Collection Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for product in products %}
+        <td>
+            {{product.id}}
+        </td>
+        <td>
+            {{product.product__title}}
+        </td>
+        <td>
+            {{product.product__collection__title}}
+        </td>
+        {% endfor %}
+    </tr>
+</tbody>
+</table>
+    
+    </body>
+</html>
