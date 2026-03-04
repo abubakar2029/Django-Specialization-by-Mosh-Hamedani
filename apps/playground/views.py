@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from apps.storefront.models import Customer, OrderItem, Product
+from apps.storefront.models import Customer, Order, OrderItem, Product
 
 
 # VIEWS Exercises
@@ -10,11 +10,21 @@ def collection_3_order_items(request):
 
     return render(request, 'collection_3_order_items.html', {'products': query_set})
 
+
+
+# Get last 5 Orders with their customers and items (incl products)
+def last_5_orders_with_items(request):
+    query_set = Order.objects.get_related('Customer').prefetch_related('orderitem_set__product').all()[:5]
+
+    return render(request, 'last_5_orders_with_items.html', {'orders': query_set})
+
+
 def ordered_items(request):
     query_set = OrderItem.objects.all().order_by('product__title').values(
-        'product__id', 'product__title','product__unit_price').distinct()
+        'product__id', 'product__title', 'product__unit_price').distinct()
     # using disctinct() because on product can appear in multiple order items
     return render(request, 'ordered_items.html', {'products': query_set})
+
 
 def defer_products(request):
     query_set = Product.objects.only(
@@ -22,6 +32,7 @@ def defer_products(request):
     ).order_by('id')
 
     return render(request, 'defer_products.html', {'products': query_set})
+
 
 def low_inventory_products(request):
     query_set = Product.objects.filter(inventory__lte=10)
