@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
     discount = models.FloatField()
@@ -20,7 +21,8 @@ class Product(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     promotions = models.ManyToManyField(Promotion)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
-    # it will create collection_id 
+    # it will create collection_id
+
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
@@ -67,8 +69,7 @@ class OrderItem(models.Model):
 class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 
 class Cart(models.Model):
