@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import include, path
 from debug_toolbar.toolbar import debug_toolbar_urls
 
+admin.site.site_header = 'Learning Admin'
+admin.site.site_title = 'Learning Admin Portal'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/', include('apps.playground.urls'))
