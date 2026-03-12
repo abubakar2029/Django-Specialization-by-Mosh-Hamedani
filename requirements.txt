@@ -1,0 +1,8 @@
+# Generated from Pipfile
+# Python 3.9
+
+django
+django-debug-toolbar
+mysqlclient
+djangorestframework
+autopep8

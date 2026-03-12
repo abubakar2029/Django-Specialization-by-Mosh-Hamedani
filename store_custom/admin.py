@@ -1,15 +1,18 @@
+from store.models import Product
 from django.contrib import admin
-from apps.storefront.admin import ProductAdmin
-from apps.storefront.models import Product
-from apps.tags.models import TaggedItem
 from django.contrib.contenttypes.admin import GenericTabularInline
+from store.admin import ProductAdmin
+from tags.models import TaggedItem
+
 
 class TagInline(GenericTabularInline):
+    autocomplete_fields = ['tag']
     model = TaggedItem
-    extra = 1
 
-class CustomProductAdmin(ProductAdmin): # it extends the default ProductAdmin
+
+class CustomProductAdmin(ProductAdmin):
     inlines = [TagInline]
 
-admin.site.unregister(Product) 
+
+admin.site.unregister(Product)
 admin.site.register(Product, CustomProductAdmin)
