@@ -8,7 +8,8 @@ class CollectionSerializer(serializers.ModelSerializer):
         model = Collection
         fields = ['id', 'title', 'products_count']
 
-    products_count = serializers.IntegerField(required=False)
+    # because products_count is not a field in the Collection model
+    products_count = serializers.IntegerField(read_only=True)
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -24,7 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     # collection = serializers.StringRelatedField()
 
-    collection = CollectionSerializer()
+    collection = CollectionSerializer()  # it will give collection object
 
     price_with_tax = serializers.SerializerMethodField(
         method_name='calculate_tax')
