@@ -6,12 +6,13 @@ from rest_framework import status
 from store.admin import OrderAdmin
 from store.filters import ProductFilter
 from store.pagination import DefaultPagination
-from .models import Collection, Order, OrderItem, Product, Review
-from .serializers import CollectionSerializer, ProductSerializer, ReviewSerializer, ReviewSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.viewsets import ModelViewSet
+from .models import Cart, CartItem, Collection, Order, OrderItem, Product, Review
+from .serializers import CartItemSerializer, CollectionSerializer, ProductSerializer, ReviewSerializer, ReviewSerializer, CartSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
 
 
 class ProductViewSet(ModelViewSet):
@@ -101,3 +102,21 @@ def collection_detail(request, pk):
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+
+class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericViewSet):
+    queryset = Cart.objects.prefetch_related('cartitem_set__product').all()
+    serializer_class = CartSerializer
+
+
+class CartItemViewSet(ModelViewSet):
+    serializer_class = CartItemSerializer
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
+
+
+# for this have to write url manually
+# class CartViewSet(CreateAPIView):
+#     queryset = Cart.objects.all()
+#     serializer_class = CartSerializer
